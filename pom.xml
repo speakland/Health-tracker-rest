@@ -110,7 +110,7 @@
                     <archive>
                         <!-- This sets up the main manifest attribute -->
                         <manifest>
-                            <mainClass>AppKt</mainClass>
+                            <mainClass>org.AppKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
