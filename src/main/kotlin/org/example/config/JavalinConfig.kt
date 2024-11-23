@@ -2,7 +2,6 @@ package org.example.config
 
 import io.javalin.Javalin
 import org.example.controllers.HealthTrackerController
-import org.example.controllers.HealthTrackerController.getAllUsers
 
 class JavalinConfig {
 
@@ -18,14 +17,15 @@ class JavalinConfig {
     }
 
 
-  //  private fun registerRoutes(app: Javalin) {
- //       app.get("/api/users", HealthTrackerController::getAllUsers)
-   // }
 
     private fun registerRoutes(app: Javalin) {
         app.get("/api/users", HealthTrackerController::getAllUsers)
-        app.get("/api/users/{user-id}", HealthTrackerController::getUserByUserId)
-    }
 
+        app.get("/api/users/{user-id}", HealthTrackerController::getUserByUserId)
+        app.delete("/api/users/{user-id}", HealthTrackerController::deleteUser)
+        app.patch("/api/users/{user-id}", HealthTrackerController::updateUser)
+
+        app.get("/api/users/email/{email}", HealthTrackerController::getUserByEmail)
+    }
 
 }
