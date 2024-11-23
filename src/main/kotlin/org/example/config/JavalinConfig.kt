@@ -1,16 +1,22 @@
 package org.example.config
 
 import io.javalin.Javalin
+import io.javalin.json.JavalinJackson
 import org.example.controllers.HealthTrackerController
+import org.example.utils.jsonObjectMapper
 
 class JavalinConfig {
 
     fun startJavalinService(): Javalin {
-
-        val app = Javalin.create().apply {
-            exception(Exception::class.java) { e, ctx -> e.printStackTrace() }
-            error(404) { ctx -> ctx.json("404 - Not Found") }
-        }.start(7001)
+        val app = Javalin.create {
+            //add this jsonMapper to serialise objects to json
+            it.jsonMapper(JavalinJackson(jsonObjectMapper()))
+        }
+            .apply{
+                exception(Exception::class.java) { e, ctx -> e.printStackTrace() }
+                error(404) { ctx -> ctx.json("404 - Not Found") }
+            }
+            .start(getRemoteAssignedPort())
 
         registerRoutes(app)
         return app
@@ -25,6 +31,11 @@ class JavalinConfig {
         app.delete("/api/users/{user-id}", HealthTrackerController::deleteUser)
         app.patch("/api/users/{user-id}", HealthTrackerController::updateUser)
         app.get("/api/users/email/{email}", HealthTrackerController::getUserByEmail)
+
+
+        app.get("/api/activities", HealthTrackerController::getAllActivities)
+        app.post("/api/activities", HealthTrackerController::addActivity)
+        app.get("/api/users/{user-id}/activities", HealthTrackerController::getActivitiesByUserId)
     }
 
     private fun getRemoteAssignedPort(): Int {
