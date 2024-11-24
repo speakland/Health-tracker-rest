@@ -4,7 +4,6 @@ import com.fasterxml.jackson.datatype.joda.JodaModule
 import io.javalin.http.Context
 import org.example.domain.repository.UserDAO
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.example.domain.Activity
 import org.example.domain.repository.ActivityDAO
 import org.example.utils.jsonToObject

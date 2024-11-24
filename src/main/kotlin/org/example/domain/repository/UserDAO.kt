@@ -3,8 +3,6 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.example.domain.User
 import org.example.domain.db.Users
-import org.example.domain.db.Users.email
-import org.example.domain.db.Users.name
 import org.example.utils.mapToUser
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
@@ -30,14 +28,7 @@ class UserDAO {
         }
     }
 
-    fun save(user: User){
-        transaction {
-            Users.insert {
-                it[name] = user.name
-                it[email] = user.email
-            }
-        }
-    }
+
 
     fun findByEmail(email: String) :User?{
         return transaction {
@@ -53,8 +44,18 @@ class UserDAO {
         }
     }
 
-    fun update(id: Int, user: User){
-        transaction {
+    fun save(user: User) : Int?{
+        return transaction {
+            Users.insert {
+                it[name] = user.name
+                it[email] = user.email
+            } get Users.id
+        }
+    }
+
+
+    fun update(id: Int, user: User): Int{
+        return transaction {
             Users.update ({
                 Users.id eq id}) {
                 it[name] = user.name
