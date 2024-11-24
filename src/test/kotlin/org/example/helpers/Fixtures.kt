@@ -11,3 +11,6 @@ val users = arrayListOf<User>(
     User(name = "Mary Contrary", email = "mary@contrary.com", id = 3),
     User(name = "Carol Singer", email = "carol@singer.com", id = 4)
 )
+
+val updatedName = "Updated Name"
+val updatedEmail = "Updated Email"

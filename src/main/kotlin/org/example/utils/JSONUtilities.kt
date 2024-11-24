@@ -24,3 +24,7 @@ inline fun <reified T: Any> jsonToObject(json: String) : T
 
 
 
+
+val mapper = jacksonObjectMapper()
+    .registerModule(JodaModule())
+    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
