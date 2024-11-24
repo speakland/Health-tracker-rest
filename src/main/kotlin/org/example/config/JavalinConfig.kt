@@ -2,7 +2,8 @@ package org.example.config
 
 import io.javalin.Javalin
 import io.javalin.json.JavalinJackson
-import org.example.controllers.HealthTrackerController
+import org.example.controllers.ActivityController
+import org.example.controllers.UserController
 import org.example.utils.jsonObjectMapper
 
 class JavalinConfig {
@@ -25,17 +26,23 @@ class JavalinConfig {
 
 
     private fun registerRoutes(app: Javalin) {
-        app.get("/api/users", HealthTrackerController::getAllUsers)
+        //users
+        app.get("/api/users", UserController::getAllUsers)
+        app.get("/api/users/{user-id}", UserController::getUserByUserId)
+        app.delete("/api/users/{user-id}", UserController::deleteUser)
+        app.patch("/api/users/{user-id}", UserController::updateUser)
+        app.get("/api/users/email/{email}", UserController::getUserByEmail)
+        app.post("/api/users", UserController::addUser)
+        //activities
+        app.get("/api/activities", ActivityController::getAllActivities)
+        app.post("/api/activities", ActivityController::addActivity)
+        app.get("/api/users/{user-id}/activities", ActivityController::getActivitiesByUserId)
 
-        app.get("/api/users/{user-id}", HealthTrackerController::getUserByUserId)
-        app.delete("/api/users/{user-id}", HealthTrackerController::deleteUser)
-        app.patch("/api/users/{user-id}", HealthTrackerController::updateUser)
-        app.get("/api/users/email/{email}", HealthTrackerController::getUserByEmail)
+        app.delete("/api/users/{user-id}/activities", ActivityController::deleteAllActivitiesByUser)
+        app.delete("/api/activities/{activity-id}", ActivityController::deleteActivityByActivityId)
+        app.patch("/api/activities/{activity-id}", ActivityController::updateActivityById)
+        app.get("/api/activities/{activity-id}", ActivityController::getActivityById)
 
-
-        app.get("/api/activities", HealthTrackerController::getAllActivities)
-        app.post("/api/activities", HealthTrackerController::addActivity)
-        app.get("/api/users/{user-id}/activities", HealthTrackerController::getActivitiesByUserId)
     }
 
     private fun getRemoteAssignedPort(): Int {

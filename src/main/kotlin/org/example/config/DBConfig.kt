@@ -26,8 +26,9 @@ class DbConfig {
             )
 
         } catch (e: PSQLException) {
-
         }
+
+
         return dbConfig
 
     }
