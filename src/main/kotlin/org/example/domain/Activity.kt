@@ -1,5 +1,4 @@
 package org.example.domain
-
 import org.joda.time.DateTime
 
 data class Activity (var id: Int,
