@@ -49,5 +49,5 @@ fun mapToStatistic(it: ResultRow) = Statistic(
     totalActivityHours = it[Statistics.totalActivityHours],
     weekStart = it[Statistics.weekStart],
     weekEnd = it[Statistics.weekEnd],
-    userId = it[Statistics.userId]
+    userId = it[Statistics.userId],
 )
