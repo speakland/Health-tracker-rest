@@ -1,12 +1,10 @@
 package org.example.domain.db
-import org.example.domain.db.Activities.references
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.jodatime.date
 
 
-// SRP - Responsibility is to manage one user.
-//       Database wise, this is the table object.
+
 
 object Nutritions : Table("nutrition") {
     val id = integer("id").autoIncrement()

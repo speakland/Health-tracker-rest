@@ -1,9 +1,8 @@
 package org.example.domain.db
-import org.example.domain.db.Activities.references
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp
-import org.jetbrains.exposed.sql.jodatime.date
+
 
 object Statistics : Table("statistics") {
     val id = integer("id").autoIncrement()
