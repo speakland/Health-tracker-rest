@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp
 
 object Sleeps : Table("sleep") {
-    val id = integer("id").autoIncrement()
+    val id = integer("sleep_id").autoIncrement()
     val sleepStart = timestamp("sleep_start")
     val sleepEnd = timestamp("sleep_end")
     val sleepDuration = double("sleep_duration")

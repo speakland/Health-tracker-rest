@@ -7,13 +7,13 @@ import org.jetbrains.exposed.sql.jodatime.date
 
 
 object Nutritions : Table("nutrition") {
-    val id = integer("id").autoIncrement()
+    val id = integer("nutrition_id").autoIncrement()
     val name = varchar("name", 100)
     val calories = integer("calories")
     val fat = double("fat")
     val carbs = double("carbs")
     val protein = double("protein")
-    val waterIntake = double("waterIntake")
+    val waterIntake = double("water_intake")
     val loggedDate = date("loggedDate")
     val userId = integer("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE)
 

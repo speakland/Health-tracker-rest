@@ -1,16 +1,16 @@
 -- Table: users
 CREATE TABLE users (
-                       user_id SERIAL PRIMARY KEY,
-                       username VARCHAR(255) NOT NULL,
-                       email VARCHAR(255) UNIQUE NOT NULL,
-                       password VARCHAR(255) NOT NULL,
-                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                       id serial PRIMARY KEY,
+                       name VARCHAR (100) NOT NULL,
+                       email VARCHAR (255) UNIQUE NOT NULL
 );
+
 
 -- Table: nutrition
 CREATE TABLE nutrition (
                            nutrition_id SERIAL PRIMARY KEY,
-                           user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+                        name VARCHAR (100) NOT NULL,
+                           user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                            calories INTEGER,
                            fat DOUBLE PRECISION,
                            carbs DOUBLE PRECISION,
@@ -22,7 +22,7 @@ CREATE TABLE nutrition (
 -- Table: activity
 CREATE TABLE activity (
                           activity_id SERIAL PRIMARY KEY,
-                          user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+                          user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                           activity_type VARCHAR(255),
                           calories_burned INTEGER,
                           duration INTERVAL,
@@ -32,7 +32,7 @@ CREATE TABLE activity (
 -- Table: sleep
 CREATE TABLE sleep (
                        sleep_id SERIAL PRIMARY KEY,
-                       user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+                       user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                        sleep_start TIMESTAMP NOT NULL,
                        sleep_end TIMESTAMP NOT NULL,
                        sleep_duration INTERVAL,
@@ -42,7 +42,7 @@ CREATE TABLE sleep (
 -- Table: statistics
 CREATE TABLE statistics (
                             stat_id SERIAL PRIMARY KEY,
-                            user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+                            user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                             total_sleep_hours DOUBLE PRECISION,
                             average_calories INTEGER,
                             total_calories INTEGER,
@@ -54,18 +54,19 @@ CREATE TABLE statistics (
 
 
 -- Insert Users
-INSERT INTO users (username, email, password)
+INSERT INTO users (name, email)
 VALUES
-    ('john_doe', 'john.doe@example.com', 'password123'),
-    ('jane_smith', 'jane.smith@example.com', 'securepass456');
+    ('John Doe', 'john.doe@example.com'),
+    ('Jane Smith', 'jane.smith@example.com');
+
 
 -- Insert Nutrition Data
-INSERT INTO nutrition (user_id, calories, fat, carbs, protein, water_intake, logged_date)
+INSERT INTO nutrition (user_id, name, calories, fat, carbs, protein, water_intake, logged_date)
 VALUES
-    (1, 2000, 70.5, 250.0, 100.0, 2.5, '2024-12-27'),
-    (1, 1800, 65.0, 200.0, 90.0, 3.0, '2024-12-28'),
-    (2, 1500, 50.0, 180.0, 80.0, 2.0, '2024-12-27'),
-    (2, 1600, 55.0, 190.0, 85.0, 2.5, '2024-12-28');
+    (1, 'Burger', 2000, 70.5, 250.0, 100.0, 2.5, '2024-12-27'),
+    (1, 'Burger',1800, 65.0, 200.0, 90.0, 3.0, '2024-12-28'),
+    (2, 'Burger',1500, 50.0, 180.0, 80.0, 2.0, '2024-12-27'),
+    (2, 'Burger',1600, 55.0, 190.0, 85.0, 2.5, '2024-12-28');
 
 -- Insert Activity Data
 INSERT INTO activity (user_id, activity_type, calories_burned, duration, activity_date)
