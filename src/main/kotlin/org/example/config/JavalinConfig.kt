@@ -9,7 +9,7 @@ import org.example.utils.jsonObjectMapper
 class JavalinConfig {
 
 
-    fun startJavalinService(): Javalin {
+    /*fun startJavalinService(): Javalin {
         val app = Javalin.create{
             //added this jsonMapper for our integration tests - serialise objects to json
             it.jsonMapper(JavalinJackson(jsonObjectMapper()))
@@ -22,8 +22,17 @@ class JavalinConfig {
 
         registerRoutes(app)
         return app
-    }
+    }*/
+    fun startJavalinService(): Javalin {
 
+        val app = Javalin.create().apply {
+            exception(Exception::class.java) { e, ctx -> e.printStackTrace() }
+            error(404) { ctx -> ctx.json("404 - Not Found") }
+        }.start(getRemoteAssignedPort())
+
+        registerRoutes(app)
+        return app
+    }
 
 
     private fun registerRoutes(app: Javalin) {
