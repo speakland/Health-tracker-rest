@@ -18,12 +18,29 @@ object ActivityController {
     // ActivityDAO specifics
     //-------------------------------------------------------------
 
-    fun getAllActivities(ctx: Context) {
+    /*fun getAllActivities(ctx: Context) {
         //mapper handles the deserialization of Joda date into a String.
         val mapper = jacksonObjectMapper()
             .registerModule(JodaModule())
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         ctx.json(mapper.writeValueAsString( activityDAO.getAll() ))
+    }*/
+
+    fun getAllActivities(ctx: Context) {
+        try {
+            val activities = activityDAO.getAll()
+            println("Activities from DAO: $activities")
+
+            if (activities.isEmpty()) {
+                ctx.status(404).json("No activities found")
+            } else {
+                ctx.status(200).json(activities)
+            }
+        } catch (e: Exception) {
+            println("Error fetching activities: ${e.message}")
+            e.printStackTrace()
+            ctx.status(500).json("Server error: ${e.message}")
+        }
     }
 
     fun getActivitiesByUserId(ctx: Context) {
