@@ -7,6 +7,6 @@ data class Statistic(
     var totalSleepHours: Double,
     var averageCalories: Int,
     var totalActivityHours: Double,
-    var weekStart: Instant,
-    var weekEnd: Instant,
+    var weekStart: String,
+    var weekEnd: String,
     var userId: Int)

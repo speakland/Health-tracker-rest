@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/DataBaseConsoles/create.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/DataBaseConsoles/delete.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/DataBaseConsoles/drop.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/DataBaseConsoles/insert.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/DataBaseConsoles/tests.sql" dialect="PostgreSQL" />

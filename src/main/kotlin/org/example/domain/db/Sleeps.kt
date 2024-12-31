@@ -4,10 +4,10 @@ import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp
 
-object Sleeps : Table("sleep") {
-    val id = integer("sleep_id").autoIncrement()
-    val sleepStart = timestamp("sleep_start")
-    val sleepEnd = timestamp("sleep_end")
+object Sleeps : Table("sleeps") {
+    val id = integer("id").autoIncrement()
+    val sleepStart = varchar("sleep_start",255)
+    val sleepEnd = varchar("sleep_end",255)
     val sleepDuration = double("sleep_duration")
     val bedtimeReminder = bool("bedtime_reminder")
     val userId = integer("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE)

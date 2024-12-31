@@ -42,7 +42,7 @@ class JavalinConfig {
         app.get("/api/users/{user-id}/activities", ActivityController::getActivitiesByUserId)
         app.get("/api/activities/{activity-id}", ActivityController::getActivityById)
         app.post("/api/activities", ActivityController::addActivity)
-        app.patch("/api/activities/{activity-id}", ActivityController::updateActivityById)
+        //app.patch("/api/activities/{activity-id}", ActivityController::updateActivityById)
         app.delete("/api/users/{user-id}/activities", ActivityController::deleteAllActivitiesByUser)
         app.delete("/api/activities/{activity-id}", ActivityController::deleteActivityByActivityId)
 
