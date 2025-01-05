@@ -33,15 +33,15 @@ class NutritionDAO {
     fun save(nutrition: Nutrition) {
         transaction {
             Nutritions.insert {
-                it[Nutritions.id] = nutrition.id
-                it[Nutritions.name] = nutrition.name
-                it[Nutritions.calories] = nutrition.calories
-                it[Nutritions.fat] = nutrition.fat
-                it[Nutritions.carbs] = nutrition.carbs
-                it[Nutritions.protein] = nutrition.protein
-                it[Nutritions.waterIntake] = nutrition.waterIntake
-                it[Nutritions.loggedDate] = nutrition.loggedDate
-                it[Nutritions.userId] = nutrition.userId
+                it[id] = nutrition.id
+                it[name] = nutrition.name
+                it[calories] = nutrition.calories
+                it[fat] = nutrition.fat
+                it[carbs] = nutrition.carbs
+                it[protein] = nutrition.protein
+                it[waterIntake] = nutrition.waterIntake
+                it[loggedDate] = nutrition.loggedDate
+                it[userId] = nutrition.userId
             }
         }
     }

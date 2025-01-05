@@ -5,6 +5,9 @@ import io.javalin.json.JavalinJackson
 import io.javalin.vue.VueComponent
 import org.example.controllers.*
 import org.example.utils.jsonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 class JavalinConfig {
@@ -25,6 +28,7 @@ class JavalinConfig {
         registerRoutes(app)
         return app
     }
+
 
 
     private fun registerRoutes(app: Javalin) {

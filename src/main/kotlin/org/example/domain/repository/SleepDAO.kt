@@ -7,6 +7,10 @@ import org.example.utils.mapToSleep
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.time.LocalDate;
 
 class SleepDAO {
     //Get all the sleep in the database regardless of user id
@@ -33,12 +37,12 @@ class SleepDAO {
     fun save(sleep: Sleep) {
         transaction {
             Sleeps.insert {
-                it[Sleeps.id] = sleep.id
-                it[Sleeps.sleepStart] = sleep.sleepStart
-                it[Sleeps.sleepEnd] = sleep.sleepEnd
-                it[Sleeps.sleepDuration] = sleep.sleepDuration
-                it[Sleeps.bedtimeReminder] = sleep.bedtimeReminder
-                it[Sleeps.userId] = sleep.userId
+                it[id] = sleep.id
+                it[sleepStart] = sleep.sleepStart
+                it[sleepEnd] = sleep.sleepEnd
+                it[sleepDuration] = sleep.sleepDuration
+                it[bedtimeReminder] = sleep.bedtimeReminder
+                it[userId] = sleep.userId
             }
         }
     }

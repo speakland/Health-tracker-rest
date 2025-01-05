@@ -37,13 +37,13 @@ class StatisticDAO {
     fun save(statistic: Statistic) {
         transaction {
             Statistics.insert {
-                it[Statistics.id] = statistic.id
-                it[Statistics.totalSleepHours] = statistic.totalSleepHours
-                it[Statistics.averageCalories] = statistic.averageCalories
-                it[Statistics.totalActivityHours] = statistic.totalActivityHours
-                it[Statistics.weekStart] = statistic.weekStart
-                it[Statistics.weekEnd] = statistic.weekEnd
-                it[Statistics.userId] = statistic.userId
+                it[id] = statistic.id
+                it[totalSleepHours] = statistic.totalSleepHours
+                it[averageCalories] = statistic.averageCalories
+                it[totalActivityHours] = statistic.totalActivityHours
+                it[weekStart] = statistic.weekStart
+                it[weekEnd] = statistic.weekEnd
+                it[userId] = statistic.userId
             }
         }
     }

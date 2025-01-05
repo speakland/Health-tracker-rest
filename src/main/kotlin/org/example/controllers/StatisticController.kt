@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.joda.JodaModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.javalin.http.Context
-import org.example.domain.Sleep
 import org.example.domain.Statistic
-import org.example.domain.repository.SleepDAO
 import org.example.domain.repository.StatisticDAO
 import org.example.domain.repository.UserDAO
 import org.example.utils.jsonToObject
