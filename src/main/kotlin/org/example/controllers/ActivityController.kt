@@ -18,12 +18,16 @@ object ActivityController {
     // ActivityDAO specifics
     //-------------------------------------------------------------
 
+
     fun getAllActivities(ctx: Context) {
-        //mapper handles the deserialization of Joda date into a String.
-        val mapper = jacksonObjectMapper()
-            .registerModule(JodaModule())
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        ctx.json(mapper.writeValueAsString( activityDAO.getAll() ))
+        val activities = activityDAO.getAll()
+        if (activities.size != 0) {
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
+        ctx.json(activities)
     }
 
     fun getActivitiesByUserId(ctx: Context) {
@@ -49,13 +53,13 @@ object ActivityController {
 
 
     fun deleteActivityByActivityId(ctx: Context){
-        activityDAO.delete(ctx.pathParam("activity-id").toInt())
+        activityDAO.deleteByActivityId(ctx.pathParam("activity-id").toInt())
     }
 
 
     fun deleteAllActivitiesByUser(ctx: Context){
         val userId = ctx.pathParam("user-id").toInt()
-        activityDAO.deleteAllByUserId(userId)
+        activityDAO.deleteByUserId (userId)
     }
 
 
@@ -66,11 +70,12 @@ object ActivityController {
         }
     }
 
-    fun updateActivityById(ctx: Context){
+ /*fun updateActivityById(ctx: Context){
         val activityUpdates: Activity = jsonToObject(ctx.body())
-        activityDAO.update(
+        activityDAO.updateByActivityId (
             id = ctx.pathParam("activity-id").toInt(),
             activity=activityUpdates)
-    }
+    }*/
+
 }
 

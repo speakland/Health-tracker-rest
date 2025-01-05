@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.joda.JodaModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.javalin.http.Context
-import org.example.domain.Nutrition
 import org.example.domain.Sleep
-import org.example.domain.repository.NutritionDAO
 import org.example.domain.repository.SleepDAO
 import org.example.domain.repository.UserDAO
 import org.example.utils.jsonToObject
+
 
 object SleepController {
     private val sleepDao = SleepDAO()

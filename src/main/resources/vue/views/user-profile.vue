@@ -14,3 +14,20 @@
     </dt>
   </div>
 </template>
+
+
+<script>
+app.component("user-profile", {
+  template: "#user-profile",
+  data: () => ({
+    user: null
+  }),
+  created: function () {
+    const userId = this.$javalin.pathParams["user-id"];
+    const url = `/api/users/${userId}`
+    axios.get(url)
+        .then(res => this.user = res.data)
+        .catch(() => alert("Error while fetching user" + userId));
+  }
+});
+</script>

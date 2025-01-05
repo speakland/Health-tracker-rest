@@ -1,8 +1,8 @@
-drop table nutrition;
+drop table nutritions;
 
-drop table activity;
+drop table activities;
 
-drop table sleep;
+drop table sleeps;
 
 drop table statistics;
 

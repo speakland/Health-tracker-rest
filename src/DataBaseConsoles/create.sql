@@ -1,53 +1,58 @@
 -- Table: users
-CREATE TABLE users (
-                       id serial PRIMARY KEY,
-                       name VARCHAR (100) NOT NULL,
-                       email VARCHAR (255) UNIQUE NOT NULL
+CREATE TABLE users
+(
+    id    serial PRIMARY KEY,
+    name  VARCHAR(100)        NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL
 );
 
 
 -- Table: nutrition
-CREATE TABLE nutrition (
-                           nutrition_id SERIAL PRIMARY KEY,
-                        name VARCHAR (100) NOT NULL,
-                           user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-                           calories INTEGER,
-                           fat DOUBLE PRECISION,
-                           carbs DOUBLE PRECISION,
-                           protein DOUBLE PRECISION,
-                           water_intake DOUBLE PRECISION,
-                           logged_date DATE NOT NULL
+CREATE TABLE nutritions
+(
+    id           SERIAL PRIMARY KEY,
+    name         VARCHAR(100) NOT NULL,
+    user_id      INTEGER      NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    calories     INTEGER,
+    fat          FLOAT,
+    carbs        FLOAT,
+    protein      FLOAT,
+    water_intake FLOAT,
+    logged_date  DATE         NOT NULL
 );
 
 -- Table: activity
-CREATE TABLE activity (
-                          activity_id SERIAL PRIMARY KEY,
-                          user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-                          activity_type VARCHAR(255),
-                          calories_burned INTEGER,
-                          duration INTERVAL,
-                          activity_date DATE NOT NULL
+CREATE TABLE activities
+(
+    id          SERIAL PRIMARY KEY,
+    user_id     INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    description VARCHAR(255),
+    calories    INTEGER,
+    duration    FLOAT,
+    started     DATE    NOT NULL
 );
 
+
 -- Table: sleep
-CREATE TABLE sleep (
-                       sleep_id SERIAL PRIMARY KEY,
-                       user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-                       sleep_start TIMESTAMP NOT NULL,
-                       sleep_end TIMESTAMP NOT NULL,
-                       sleep_duration INTERVAL,
-                       bedtime_reminder BOOLEAN
+CREATE TABLE sleeps
+(
+    id               SERIAL PRIMARY KEY,
+    user_id          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    sleep_start      DATE,
+    sleep_end        DATE,
+    sleep_duration   FLOAT,
+    bedtime_reminder BOOLEAN
 );
 
 -- Table: statistics
-CREATE TABLE statistics (
-                            stat_id SERIAL PRIMARY KEY,
-                            user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-                            total_sleep_hours DOUBLE PRECISION,
-                            average_calories INTEGER,
-                            total_activity_hours DOUBLE PRECISION,
-                            week_start DATE NOT NULL,
-                            week_end DATE NOT NULL
+CREATE TABLE statistics
+(
+    id                   SERIAL PRIMARY KEY,
+    user_id              INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    total_sleep_hours    FLOAT,
+    average_calories     INTEGER,
+    total_activity_hours FLOAT,
+    week_start           VARCHAR(255),
+    week_end             VARCHAR(255)
 );
-
 

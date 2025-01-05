@@ -1,37 +1,31 @@
-
--- Insert Users
 INSERT INTO users (name, email)
-VALUES
-    ('John Doe', 'john.doe@example.com'),
-    ('Jane Smith', 'jane.smith@example.com');
+VALUES ('John Doe', 'john.doe@example.com'),
+       ('Jane Smith', 'jane.smith@example.com'),
+       ('Mark Johnson', 'mark.johnson@example.com'),
+       ('Emily Davis', 'emily.davis@example.com');
+
+INSERT INTO nutritions (name, user_id, calories, fat, carbs, protein, water_intake, logged_date)
+VALUES ('Chicken Salad', 1, 300, 10.5, 15.3, 25.1, 0.5, '2024-12-28'),
+       ('Pasta Carbonara', 2, 550, 25.0, 60.5, 20.0, 1.2, '2024-12-29'),
+       ('Grilled Salmon', 3, 400, 15.2, 0.0, 45.0, 0.8, '2024-12-30'),
+       ('Vegetable Stir Fry', 4, 250, 8.0, 40.0, 8.0, 0.6, '2024-12-31');
+
+INSERT INTO activities (user_id, description, calories, duration, started)
+VALUES (1, 'Running', 300, 45.5, '2024-12-28'),
+       (2, 'Yoga', 150, 60.0, '2024-12-29'),
+       (3, 'Cycling', 400, 90.0, '2024-12-30'),
+       (4, 'Swimming', 350, 30.0, '2024-12-31');
+
+-- Insert 1
+INSERT INTO sleeps (user_id, sleep_start, sleep_end, sleep_duration, bedtime_reminder)
+VALUES (1,  '2024-12-28', '2024-12-29', 8.0, TRUE),
+       (2, '2024-12-28', '2024-12-29', 7.5, FALSE),
+       (3,  '2024-12-28', '2024-12-29', 7.75, TRUE),
+       (4,  '2024-12-28', '2024-12-29', 8.0, FALSE);
 
 
--- Insert Nutrition Data
-INSERT INTO nutrition (user_id, name, calories, fat, carbs, protein, water_intake, logged_date)
-VALUES
-    (1, 'Burger', 2000, 70.5, 250.0, 100.0, 2.5, '2024-12-27'),
-    (1, 'Burger',1800, 65.0, 200.0, 90.0, 3.0, '2024-12-28'),
-    (2, 'Burger',1500, 50.0, 180.0, 80.0, 2.0, '2024-12-27'),
-    (2, 'Burger',1600, 55.0, 190.0, 85.0, 2.5, '2024-12-28');
-
--- Insert Activity Data
-INSERT INTO activity (user_id, activity_type, calories_burned, duration, activity_date)
-VALUES
-    (1, 'Running', 300, '00:30:00', '2024-12-27'),
-    (1, 'Cycling', 400, '01:00:00', '2024-12-28'),
-    (2, 'Yoga', 150, '00:45:00', '2024-12-27'),
-    (2, 'Swimming', 350, '01:15:00', '2024-12-28');
-
--- Insert Sleep Data
-INSERT INTO sleep (user_id, sleep_start, sleep_end, sleep_duration, bedtime_reminder)
-VALUES
-    (1, '2024-12-26 22:00:00', '2024-12-27 06:00:00', '08:00:00', TRUE),
-    (1, '2024-12-27 22:30:00', '2024-12-28 06:30:00', '08:00:00', TRUE),
-    (2, '2024-12-26 23:00:00', '2024-12-27 07:00:00', '08:00:00', FALSE),
-    (2, '2024-12-27 23:30:00', '2024-12-28 07:30:00', '08:00:00', FALSE);
-
--- Insert Statistics Data
 INSERT INTO statistics (user_id, total_sleep_hours, average_calories, total_activity_hours, week_start, week_end)
-VALUES
-    (1, 16.0,  3800, 1.5, '2024-12-25', '2024-12-31'),
-    (2, 16.0,  3100, 2.0, '2024-12-25', '2024-12-31');
+VALUES (1, 60.0, 2500, 5.0, '2024-12-28', '2024-12-31'),
+       (2, 56.0, 2200, 4.5, '2024-12-29', '2024-12-31'),
+       (3, 63.5, 2300, 6.5, '2024-12-30', '2024-12-31'),
+       (4, 61.0, 2400, 5.2, '2024-12-31', '2025-01-03');

@@ -5,6 +5,9 @@ import io.javalin.json.JavalinJackson
 import io.javalin.vue.VueComponent
 import org.example.controllers.*
 import org.example.utils.jsonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 class JavalinConfig {
@@ -27,6 +30,7 @@ class JavalinConfig {
     }
 
 
+
     private fun registerRoutes(app: Javalin) {
 
         //users
@@ -42,7 +46,7 @@ class JavalinConfig {
         app.get("/api/users/{user-id}/activities", ActivityController::getActivitiesByUserId)
         app.get("/api/activities/{activity-id}", ActivityController::getActivityById)
         app.post("/api/activities", ActivityController::addActivity)
-        app.patch("/api/activities/{activity-id}", ActivityController::updateActivityById)
+        //app.patch("/api/activities/{activity-id}", ActivityController::updateActivityById)
         app.delete("/api/users/{user-id}/activities", ActivityController::deleteAllActivitiesByUser)
         app.delete("/api/activities/{activity-id}", ActivityController::deleteActivityByActivityId)
 
