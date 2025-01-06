@@ -1,8 +1,5 @@
 package org.example.controllers
 
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.joda.JodaModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.javalin.http.Context
 import org.example.domain.Statistic
 import org.example.domain.repository.StatisticDAO
@@ -16,35 +13,80 @@ object StatisticController {
     // SleepDAO specifics
     //-------------------------------------------------------------
 
+
     fun getAllStatistics(ctx: Context) {
-        //mapper handles the deserialization of Joda date into a String.
-        val mapper = jacksonObjectMapper()
-            .registerModule(JodaModule())
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        ctx.json(mapper.writeValueAsString( statisticDao.getAll() ))
+        val statistics = statisticDao.getAll()
+        if (statistics.size != 0) {
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
+        ctx.json(statistics)
     }
 
-    fun getStatisticsByUserId(ctx: Context) {
-        if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
-            val statistics = statisticDao.findByUserId(ctx.pathParam("user-id").toInt())
-            if (statistics.isNotEmpty()) {
-                //mapper handles the deserialization of Joda date into a String.
-                val mapper = jacksonObjectMapper()
-                    .registerModule(JodaModule())
-                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                ctx.json(mapper.writeValueAsString(statistics))
-            }
+
+    fun getStatisticsByStatisticId(ctx: Context) {
+        val statistic = statisticDao.findByStatisticId(ctx.pathParam("statistic-id").toInt())
+        if (statistic != null){
+            ctx.json(statistic)
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
         }
     }
 
-    fun addStatistic(ctx: Context) {
-        //mapper handles the serialisation of Joda date into a String.
-        val statistic: Statistic = jsonToObject(ctx.body())
-        statisticDao.save(statistic)
-        ctx.json(statistic)
+    fun getStatisticsByUserId(ctx: Context) {
+        val statistics = statisticDao.findByUserId(ctx.pathParam("user-id").toInt())
+        if (statistics.isNotEmpty()) {
+            ctx.json(statistics)
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
     }
 
 
+
+    fun addStatistic(ctx: Context) {
+        val statistic : Statistic = jsonToObject(ctx.body())
+        val userId = userDao.findById(statistic.userId)
+        if (userId != null) {
+            val statisticId = statisticDao.save(statistic)
+            statistic.id = statisticId
+            ctx.json(statistic)
+            ctx.status(201)
+        }
+        else{
+            ctx.status(404)
+        }
+    }
+
+    fun deleteStatisticByStatisticId(ctx: Context){
+        if (statisticDao.deleteByStatisticId(ctx.pathParam("statistic-id").toInt()) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
+
+    fun deleteStatisticByUserId(ctx: Context){
+        if (statisticDao.deleteByUserId(ctx.pathParam("user-id").toInt()) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
+
+    fun updateStatistic(ctx: Context){
+        val statistic : Statistic = jsonToObject(ctx.body())
+        if (statisticDao.updateByStatisticId (
+                statisticId = ctx.pathParam("statistic-id").toInt(),
+                statisticToUpdate = statistic) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
 
 
 }

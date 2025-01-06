@@ -44,27 +44,38 @@ class JavalinConfig {
         //activities
         app.get("/api/activities", ActivityController::getAllActivities)
         app.get("/api/users/{user-id}/activities", ActivityController::getActivitiesByUserId)
-        app.get("/api/activities/{activity-id}", ActivityController::getActivityById)
+        app.get("/api/activities/{activity-id}", ActivityController::getActivitiesByActivityId )
         app.post("/api/activities", ActivityController::addActivity)
-        //app.patch("/api/activities/{activity-id}", ActivityController::updateActivityById)
-        app.delete("/api/users/{user-id}/activities", ActivityController::deleteAllActivitiesByUser)
+        app.patch("/api/activities/{activity-id}", ActivityController::updateActivity)
+        app.delete("/api/users/{user-id}/activities", ActivityController::getActivitiesByUserId)
         app.delete("/api/activities/{activity-id}", ActivityController::deleteActivityByActivityId)
 
         //nutritions
         app.get("/api/nutritions", NutritionController::getAllNutritions)
         app.get("/api/users/{user-id}/nutritions", NutritionController::getNutritionsByUserId)
+        app.get("/api/nutritions/{nutrition-id}", NutritionController::getNutritionsByNutritionId)
         app.post("/api/nutritions", NutritionController::addNutrition)
+        app.patch("/api/nutritions/{nutrition-id}", NutritionController::updateNutrition)
+        app.delete("/api/users/{user-id}/nutritions", NutritionController::getNutritionsByUserId)
+        app.delete("/api/nutritions/{nutrition-id}", NutritionController::deleteNutritionByNutritionId)
 
         //sleeps
         app.get("/api/sleeps", SleepController::getAllSleeps)
         app.get("/api/users/{user-id}/sleeps", SleepController::getSleepsByUserId)
+        app.get("/api/sleeps/{sleep-id}", SleepController::getSleepsBySleepId )
         app.post("/api/sleeps", SleepController::addSleep)
+        app.patch("/api/sleeps/{sleep-id}", SleepController::updateSleep)
+        app.delete("/api/users/{user-id}/sleeps", SleepController::getSleepsByUserId)
+        app.delete("/api/sleeps/{sleep-id}", SleepController::deleteSleepBySleepId)
 
         //statistics
         app.get("/api/statistics", StatisticController::getAllStatistics)
         app.get("/api/users/{user-id}/statistics", StatisticController::getStatisticsByUserId)
+        app.get("/api/statistics/{statistic-id}", StatisticController::getStatisticsByStatisticId)
         app.post("/api/statistics", StatisticController::addStatistic)
-
+        app.patch("/api/statistics/{statistic-id}", StatisticController::updateStatistic)
+        app.delete("/api/users/{user-id}/statistics", StatisticController::getStatisticsByUserId)
+        app.delete("/api/statistics/{statistics-id}", StatisticController::deleteStatisticByStatisticId)
 
 
 

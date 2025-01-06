@@ -18,7 +18,7 @@ CREATE TABLE nutritions
     carbs        FLOAT,
     protein      FLOAT,
     water_intake FLOAT,
-    logged_date  DATE         NOT NULL
+    logged_date  TIMESTAMP         NOT NULL
 );
 
 -- Table: activity
@@ -29,7 +29,7 @@ CREATE TABLE activities
     description VARCHAR(255),
     calories    INTEGER,
     duration    FLOAT,
-    started     DATE    NOT NULL
+    started     TIMESTAMP    NOT NULL
 );
 
 
@@ -38,8 +38,8 @@ CREATE TABLE sleeps
 (
     id               SERIAL PRIMARY KEY,
     user_id          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    sleep_start      DATE,
-    sleep_end        DATE,
+    sleep_start      TIMESTAMP,
+    sleep_end        TIMESTAMP,
     sleep_duration   FLOAT,
     bedtime_reminder BOOLEAN
 );
