@@ -1,8 +1,4 @@
 package org.example.controllers
-
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.joda.JodaModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.javalin.http.Context
 import org.example.domain.Sleep
 import org.example.domain.repository.SleepDAO
@@ -17,33 +13,87 @@ object SleepController {
     // SleepDAO specifics
     //-------------------------------------------------------------
 
+
     fun getAllSleeps(ctx: Context) {
-        //mapper handles the deserialization of Joda date into a String.
-        val mapper = jacksonObjectMapper()
-            .registerModule(JodaModule())
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        ctx.json(mapper.writeValueAsString( sleepDao.getAll() ))
+        val sleeps = sleepDao.getAll()
+        if (sleeps.size != 0) {
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
+        ctx.json(sleeps)
+    }
+
+
+    fun getSleepsBySleepId(ctx: Context) {
+        val sleep = sleepDao.findBySleepId(ctx.pathParam("sleep-id").toInt())
+        if (sleep != null){
+            ctx.json(sleep)
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
     }
 
     fun getSleepsByUserId(ctx: Context) {
         if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
             val sleeps = sleepDao.findByUserId(ctx.pathParam("user-id").toInt())
             if (sleeps.isNotEmpty()) {
-                //mapper handles the deserialization of Joda date into a String.
-                val mapper = jacksonObjectMapper()
-                    .registerModule(JodaModule())
-                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                ctx.json(mapper.writeValueAsString(sleeps))
+                ctx.json(sleeps)
+                ctx.status(200)
             }
+            else{
+                ctx.status(404)
+            }
+        }
+        else{
+            ctx.status(404)
         }
     }
 
+
+
     fun addSleep(ctx: Context) {
-        //mapper handles the serialisation of Joda date into a String.
-        val sleep: Sleep = jsonToObject(ctx.body())
-        sleepDao.save(sleep)
-        ctx.json(sleep)
+        val sleep : Sleep = jsonToObject(ctx.body())
+        val userId = userDao.findById(sleep.userId)
+        if (userId != null) {
+            val sleepId = sleepDao.save(sleep)
+            sleep.id = sleepId
+            ctx.json(sleep)
+            ctx.status(201)
+        }
+        else{
+            ctx.status(404)
+        }
     }
+
+
+    fun deleteSleepBySleepId(ctx: Context){
+        if (sleepDao.deleteBySleepId(ctx.pathParam("sleep-id").toInt()) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
+
+    fun deleteSleepByUserId(ctx: Context){
+        if (sleepDao.deleteByUserId(ctx.pathParam("user-id").toInt()) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
+
+    fun updateSleep(ctx: Context){
+        val sleep : Sleep = jsonToObject(ctx.body())
+        if (sleepDao.updateBySleepId(
+                sleepId = ctx.pathParam("sleep-id").toInt(),
+                sleepToUpdate = sleep) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
+
 
 
 

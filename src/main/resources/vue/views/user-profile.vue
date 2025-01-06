@@ -45,12 +45,37 @@
           </div>
         </form>
       </div>
+
       <div class="card-footer text-left">
-        <p  v-if="activities.length === 0"> No activities yet...</p>
-        <p  v-if="activities.length > 0"> Activities so far...</p>
+        <!-- activity sections-->
+        <p v-if="activities.length === 0">No activities yet...</p>
+        <p v-if="activities.length > 0">Activities so far:</p>
         <ul>
-          <li v-for="activity in activities">
-            {{ activity.description }} for {{ activity.duration }} minutes
+          <li v-for="activity in activities" :key="activity.id">
+            <strong>{{ activity.description }}</strong>:
+            {{ activity.duration }} minutes, {{ activity.calories }} kcal burned,
+            started at {{ formatDateTime(activity.started) }}
+          </li>
+        </ul>
+        <!-- sleep sections-->
+        <p v-if="sleep.length === 0">No sleep data yet...</p>
+        <ul>
+          <li v-for="entry in sleep" :key="entry.id">
+            Slept from {{ formatDateTime(entry.sleepStart) }} to {{ formatDateTime(entry.sleepEnd) }}
+            ({{ entry.sleepDuration.toFixed(1) }} hours).
+            <span v-if="entry.bedtimeReminder">(Bedtime reminder enabled)</span>
+          </li>
+        </ul>
+        <!-- nutrition sections-->
+        <p v-if="nutrition.length === 0">No nutrition data yet...</p>
+        <ul>
+          <li v-for="item in nutrition" :key="item.id">
+            <strong>{{ item.name }}</strong> ({{ formatDateTime(item.loggedDate) }}):
+            {{ item.calories }} kcal,
+            {{ item.fat.toFixed(2) }}g fat,
+            {{ item.carbs.toFixed(2) }}g carbs,
+            {{ item.protein.toFixed(2) }}g protein,
+            {{ item.waterIntake.toFixed(2) }}L water
           </li>
         </ul>
       </div>
@@ -66,6 +91,8 @@ app.component("user-profile", {
     user: null,
     noUserFound: false,
     activities: [],
+    nutrition: [],
+    sleep: [],
   }),
       created: function () {
         const userId = this.$javalin.pathParams["user-id"];
@@ -81,9 +108,28 @@ app.component("user-profile", {
             .catch(error => {
               console.log("No activities added yet (this is ok): " + error)
             })
+        axios.get(url + `/nutritions`)
+            .then(res => this.nutrition = res.data)
+            .catch(error => {
+              console.log("No nutrition data found (this is ok): " + error);
+            });
+
+        axios.get(url + `/sleeps`)
+            .then(res => this.sleep = res.data)
+            .catch(error => {
+              console.log("No sleep data found (this is ok): " + error);
+            });
       },
 
   methods: {
+    formatDateTime: function (value) {
+      if (!value || isNaN(new Date(value))) {
+        return 'Invalid date';
+      }
+      return new Date(value).toLocaleString();
+    },
+
+
     updateUser: function () {
       const userId = this.$javalin.pathParams["user-id"];
       const url = `/api/users/${userId}`
@@ -99,6 +145,8 @@ app.component("user-profile", {
           })
       alert("User updated!")
     },
+
+
     deleteUser: function () {
       if (confirm("Do you really want to delete?")) {
         const userId = this.$javalin.pathParams["user-id"];

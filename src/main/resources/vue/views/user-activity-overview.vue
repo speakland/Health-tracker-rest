@@ -1,12 +1,14 @@
 <template id="user-activity-overview">
-  <div>
-    <h3>Activities list </h3>
-    <ul>
-      <li v-for="activity in activities">
-        {{activity.id}}: {{activity.description}} for {{activity.duration}} minutes
-      </li>
-    </ul>
-  </div>
+  <app-layout>
+    <div>
+      <h3>Activities list </h3>
+      <ul>
+        <li v-for="activity in activities">
+          {{activity.id}}: {{activity.description}} for {{activity.duration}} minutes
+        </li>
+      </ul>
+    </div>
+  </app-layout>
 </template>
 
 <script>
